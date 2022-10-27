@@ -1,3 +1,4 @@
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
@@ -8,6 +9,7 @@ class TableSinhVien extends Component {
         <div className="col-12 p-2 bg-dark">
           <span className="text-white font-bold">Danh sách</span>
         </div>
+
         <div className="col-12">
           <table className="table">
             <thead>
@@ -30,23 +32,24 @@ class TableSinhVien extends Component {
                     <td>
                       <button
                         className="btn btn-primary mx-2"
-                        onClick={() =>
+                        onClick={() => {
+                          document.getElementById("maSV").disabled = true;
                           this.props.dispatch({
                             type: "LAY_SINH_VIEN",
                             payload: sinhVien.maSV,
-                          })
-                        }
+                          });
+                        }}
                       >
                         Sửa
                       </button>
                       <button
                         className="btn btn-danger"
-                        onClick={() =>
+                        onClick={() => {
                           this.props.dispatch({
                             type: "XOA_SINH_VIEN",
                             payload: sinhVien.maSV,
-                          })
-                        }
+                          });
+                        }}
                       >
                         Xóa
                       </button>

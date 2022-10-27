@@ -1,15 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as yup from "yup";
-const signUpUserSchema = yup.object().shape({
-  maSV: yup.string().required("Không để trống"),
-  hoTen: yup.string().required("Không để trống"),
-  soDienThoai: yup.string().matches(/^[0-9]+$^/),
-  email: yup
-    .string()
-    .required("Không để trống")
-    .email("Nhập đúng định dạng email!"),
-});
+
 class FormThongTin extends Component {
   state = {
     sinhVien: {
@@ -33,7 +24,13 @@ class FormThongTin extends Component {
     )
       return { ...currentState, sinhVien: newProps.sinhVienUpdate }; //this.setState({})
   }
-
+  reset() {
+    // Always set the initial state in its own function, so that
+    // you can trivially reset your components at any point.
+    this.state = {
+      inputValue: "",
+    };
+  }
   changeValue = (event) => {
     const { sinhVien, error } = this.state;
     const { value, name, title } = event.target;
@@ -58,13 +55,25 @@ class FormThongTin extends Component {
     if (dataType == "number") {
       let regetNumber = /^[0-9]+$/;
       if (regetNumber.test(value) == false) {
-        error[name] = `Không nhập chữ`;
+        error[name] = `Không nhập chữ và để trống`;
+      }
+      if (value.length > 10) {
+        error[name] = `Không nhập quá 10 kí tự`;
       }
     }
     if (dataType == "maSV") {
       let regetNumber = /^[0-9]+$/;
       if (regetNumber.test(value) == false) {
-        error[name] = `Không nhập chữ`;
+        error[name] = `Không nhập chữ và không để trống`;
+      }
+      if (value.length > 4) {
+        error[name] = `Không nhập quá 4 kí tự`;
+      }
+    }
+    if (dataType == "hoTen") {
+      let regetNumber = /^[0-9]+$/;
+      if (regetNumber.test(value) == true) {
+        error[name] = `không nhập số`;
       }
     }
     sinhVien[name] = value;
@@ -116,7 +125,6 @@ class FormThongTin extends Component {
       });
     }
   };
-
   render() {
     const { maSV, hoTen, email, soDienThoai } = this.state.error;
     return (
@@ -124,14 +132,18 @@ class FormThongTin extends Component {
         <div className="col-12 p-2 bg-dark">
           <span className="text-white font-bold">Form đăng ký</span>
         </div>
-        <form
-          className="col-12 row"
-          validationSchema={signUpUserSchema}
-          onSubmit={this.onSubmit}
-        >
+        <div className="input-group col-2 pl-5">
+          <input
+            placeholder="Tìm Kiếm"
+            value={this.state.inputValue}
+            onChange={(evt) => this.updateInputValue(evt)}
+          />
+        </div>
+        <form className="col-12 row" onSubmit={this.onSubmit}>
           <div className="col-6">
             <label>Mã SV</label>
             <input
+              id="maSV"
               data-type="maSV"
               title="Mã SV"
               value={this.state.sinhVien.maSV}
@@ -185,6 +197,15 @@ class FormThongTin extends Component {
         </form>
       </div>
     );
+  }
+  updateInputValue(evt) {
+    // this.setState({
+    //   inputValue: val,
+    // });
+    this.props.dispatch({
+      type: "TIM_KIEM_SINH_VIEN",
+      payload: "",
+    });
   }
 }
 

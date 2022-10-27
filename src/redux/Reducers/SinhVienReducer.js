@@ -1,6 +1,14 @@
 const stateDefault = {
     isSignUp: true,
-    dsSinhVien: [],
+    dsSinhVien: [
+        {
+            maSV: "1",
+            hoTen: "Ngô Văn Quân",
+            soDienThoai: "0888498092",
+            email: "vq.2509.2003@gmail.com"
+
+        }
+    ],
     sinhVienUpdate: ""
 }
 export const SinhVienReducer = (state = stateDefault, action) => {
@@ -47,9 +55,20 @@ export const SinhVienReducer = (state = stateDefault, action) => {
             if (index !== -1) {
                 dsSinhVien[index] = sinhVienTam
             }
-
-            return { ...state, dsSinhVien, isSignUp: true };
+            return { ...state, dsSinhVien, isSignUp: true, sinhVienUpdate: "" };
         }
+        // case "TIM_KIEM_SINH_VIEN": {
+        //     // const val = evt.target.value.toLowerCase();
+        //     let dsHocSinhTimKiem = [];
+        //     // console.log(this.props.dsSinhVien.map((sinhVien) => sinhVien.hoTen));
+        //     let sinhVien = this.props.dsSinhVien.map((sinhVien) => sinhVien.hoTen);
+        //     let sinhVienNew = sinhVien[0].toLowerCase();
+        //     if (val == sinhVienNew) {
+        //         dsHocSinhTimKiem.push(sinhVien);
+        //     }
+        //     console.log(dsHocSinhTimKiem);
+        //     return { ...state, dsSinhVienNew }
+        // }
         default:
             return { ...state };
     }
