@@ -1,14 +1,6 @@
 const stateDefault = {
     isSignUp: true,
-    dsSinhVien: [
-        {
-            maSV: "1",
-            hoTen: "Ngô Văn Quân",
-            soDienThoai: "0888498092",
-            email: "vq.2509.2003@gmail.com"
-
-        }
-    ],
+    dsSinhVien: [],
     sinhVienUpdate: ""
 }
 export const SinhVienReducer = (state = stateDefault, action) => {

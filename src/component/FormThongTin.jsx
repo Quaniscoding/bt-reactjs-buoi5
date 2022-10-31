@@ -192,7 +192,14 @@ class FormThongTin extends Component {
           {this.props.isSignUp ? (
             <button className="btn btn-success m-2">Thêm sinh viên</button>
           ) : (
-            <button className="btn btn-primary m-2">Cập nhật sinh viên</button>
+            <button
+              className="btn btn-primary m-2"
+              onClick={() => {
+                document.getElementById("maSV").disabled = false;
+              }}
+            >
+              Cập nhật sinh viên
+            </button>
           )}
         </form>
       </div>
